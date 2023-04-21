@@ -55,11 +55,10 @@ def show_result():
 
     #fetching all rows
     query = '''SELECT * FROM public.advworkersdata;'''
-    # cursor.execute(sql_query)
-    
-    sql_query = pd.read_sql_query(query, conn2)
-    df = pd.DataFrame(sql_query)
-    df.to_csv(r'D:\Python\ETL_pipeline_SQLServer_PostgreSQL\data\created_csv.csv', index=False)
+    cursor.execute(query)
+    with open('created_file.csv', 'w') as f:
+        for row in cursor.fetchall():
+            f.write(str(row) + "\n")
         
     conn2.commit()
     conn2.close()
